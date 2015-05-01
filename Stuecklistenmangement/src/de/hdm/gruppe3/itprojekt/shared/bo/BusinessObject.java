@@ -16,12 +16,20 @@ public abstract class BusinessObject implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-
+	
+	/**
+	 * Erzeugen einer textuellen Darstellung: 
+	 * Ausgabe des Klassennamens gefolgt von der id des Objekts.
+	 */
 	public String toString() {
 
 		return this.getClass().getName() + " #" + this.id;
 	}
 
+	/**
+	 * Die Methode equals vergleicht Objekte auf die inhaltliche Gleichheit, in
+	 * diesem Fall anhand der id.
+	 */
 	public boolean equals(Object object) {
 
 		if (object != null && object instanceof BusinessObject) {
