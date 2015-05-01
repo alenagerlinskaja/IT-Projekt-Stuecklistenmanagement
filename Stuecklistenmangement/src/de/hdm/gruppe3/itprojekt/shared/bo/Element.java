@@ -1,7 +1,9 @@
 package de.hdm.gruppe3.itprojekt.shared.bo;
 
-public class Element {
+public class Element extends BusinessObject {
 
+	
+	private static final long serialVersionUID = 1L;
 	/** Name des Elements
 	 */
 	private String name;
