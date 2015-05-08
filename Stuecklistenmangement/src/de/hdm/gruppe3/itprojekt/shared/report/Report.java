@@ -13,6 +13,8 @@ import java.util.Date;
  * Report besitzt eine Reihe von Standartelementen. Diese werden mitels Attributen 
  * modelliert und dort dokumentiert.
  * </p>
+ * @see Report
+ * @author Aliye Gököz/ In Anlehnung an Herrn Prof. Thies
  */
 
 public abstract class Report implements Serializable{
