@@ -2,7 +2,6 @@ package de.hdm.gruppe3.itprojekt.shared.report;
 
 import java.io.Serializable;
 
-import src.de.hdm.thies.bankProjekt.shared.report.Row;
 
 /**
  * Dies iste die Spalte eines Row-Objekts. Column-Objekte
@@ -11,12 +10,16 @@ import src.de.hdm.thies.bankProjekt.shared.report.Row;
  */
 
 public class Column implements Serializable{
-
+	
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 	
 	private String value = "";
 	
 	private Column() {
+		
 	}
 	
 	public Column (String s) {
