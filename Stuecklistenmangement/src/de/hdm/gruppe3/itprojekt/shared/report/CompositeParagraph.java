@@ -1,4 +1,4 @@
-package de.hdm.thies.bankProjekt.shared.report;
+package de.hdm.gruppe3.itprojekt.shared.report;
 
 import java.io.Serializable;
 import java.util.Vector;
