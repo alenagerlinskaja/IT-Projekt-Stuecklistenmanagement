@@ -1,12 +1,10 @@
 package de.hdm.gruppe3.itprojekt.shared.report;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.Vector;
 
 
-public abstract class CompositeReport 
-	extends Report 
-	implements Serializable {
+public abstract class CompositeReport extends Report implements Serializable {
 
 
   private static final long serialVersionUID = 1L;
