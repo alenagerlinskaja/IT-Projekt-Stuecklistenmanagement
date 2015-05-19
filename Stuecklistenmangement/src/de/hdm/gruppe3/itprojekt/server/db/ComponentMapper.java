@@ -80,28 +80,81 @@ public class ComponentMapper {
 
 	}
 
-	public Component deleteComponentOf(BillOfMaterial b) {
+	public Component delete(Component c) {
 
+		Connection con = DBConnection.connection();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			stmt.executeUpdate("DELETE FROM Component " + "WHERE id="
+					+ c.getId());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public Component findById(int id) {
 
+		Connection con = DBConnection.connection();
+
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt
+					.executeQuery("SELECT id, name, description, material, dateOfModification FROM Component "
+							+ "WHERE id=" + id + " ORDER BY name");
+
+			if (rs.next()) {
+				Component c = new Component();
+				c.setId(rs.getInt("id"));
+				c.setName(rs.getString("name"));
+				c.setDescription(rs.getString("description"));
+				c.setMaterial(rs.getString("material"));
+				c.setDateOfModification(rs.getDate("dateOfModification"));
+
+				return c;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return null;
 	}
 
 	public Vector<Component> findByAll() {
 
+		Connection con = DBConnection.connection();
+
+		Vector<Component> result = new Vector<Component>();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt
+					.executeQuery("SELECT id, name, description, material, dateOfModification "
+							+ "FROM Component " + "ORDER BY name");
+
+			while (rs.next()) {
+				Component c = new Component();
+				c.setId(rs.getInt("id"));
+				c.setName(rs.getString("name"));
+				c.setDescription(rs.getString("description"));
+				c.setMaterial(rs.getString("material"));
+				c.setDateOfModification(rs.getDate("dateOfModification"));
+
+				result.addElement(c);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return result;
 	}
-
-	public Vector<Component> findByBom(int id) {
-
-	}
-
-	public Vector<Component> findByBom(BillOfMaterial bom) {
-
-	}
-
+	
+// (find by Bom), hier muss man in der Klammer den Fremdschlüssel einfügen, nicht (int id)
 	public Vector<Component> findByComponentPart(int id) {
-
+		
 	}
 
 	public Vector<Component> findByComponentPart(ComponentPart p) {
