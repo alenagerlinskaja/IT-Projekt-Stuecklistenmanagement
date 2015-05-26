@@ -1,6 +1,9 @@
 package de.hdm.gruppe3.itprojekt.client;
 
+import de.hdm.gruppe3.itprojekt.shared.Administration;
+import de.hdm.gruppe3.itprojekt.shared.AdministrationAsync;
 import de.hdm.gruppe3.itprojekt.shared.FieldVerifier;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -32,8 +35,10 @@ public class Stuecklistenmangement implements EntryPoint {
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting service.
 	 */
-	private final GreetingServiceAsync greetingService = GWT
-			.create(GreetingService.class);
+	private final AdministrationAsync administrationAsync = GWT
+			.create(Administration.class);
+
+	public AdministrationAsync stuecklistenmanagement;
 
 	/**
 	 * This is the entry point method.
@@ -119,7 +124,7 @@ public class Stuecklistenmangement implements EntryPoint {
 				sendButton.setEnabled(false);
 				textToServerLabel.setText(textToServer);
 				serverResponseLabel.setText("");
-				greetingService.greetServer(textToServer,
+				stuecklistenmanagement.greetServer(textToServer,
 						new AsyncCallback<String>() {
 							public void onFailure(Throwable caught) {
 								// Show the RPC error message to the user
