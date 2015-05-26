@@ -1,15 +1,13 @@
 package de.hdm.gruppe3.itprojekt.server.db;
 
+
 import java.sql.*;
 import java.util.Vector;
 
-import de.hdm.gruppe3.itprojekt.shared.bo.BillOfMaterial;
-import de.hdm.gruppe3.itprojekt.shared.bo.Component;
 import de.hdm.gruppe3.itprojekt.shared.bo.ComponentPart;
-import de.hdm.gruppe3.itprojekt.shared.bo.FinishedProduct;
 
 /**
- * Mapper-Klasse, die <code>Component</code>-Objekte auf eine relationale
+ * Mapper-Klasse, die <code>ComponentPart</code>-Objekte auf eine relationale
  * Datenbank abbildet. Hierzu wird eine Reihe von Methoden zur Verfügung
  * gestellt, mit deren Hilfe z.B. Objekte gesucht, erzeugt, modifiziert und
  * gelöscht werden können. Das Mapping ist bidirektional. D.h., Objekte können
@@ -17,10 +15,11 @@ import de.hdm.gruppe3.itprojekt.shared.bo.FinishedProduct;
  * <p>
  * @author Thies
  */
-public class ComponentMapper {
+
+public class ComponentPartMapper {
 
 	/**
-	 * Die Klasse ComponentMapper wird nur einmal instantiiert. Man spricht
+	 * Die Klasse ComponentPartMapper wird nur einmal instantiiert. Man spricht
 	 * hierbei von einem sogenannten <b>Singleton</b>.
 	 * <p>
 	 * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal
@@ -28,7 +27,7 @@ public class ComponentMapper {
 	 * speichert die einzige Instanz dieser Klasse.
 	 */
 
-	private static ComponentMapper componentMapper = null;
+	private static ComponentPartMapper componentPartMapper = null;
 
 	/**
 	 * Geschützter Konstruktor - verhindert die Möglichkeit, mit new neue
@@ -36,43 +35,43 @@ public class ComponentMapper {
 	 * 
 	 */
 
-	protected ComponentMapper() {
+	protected ComponentPartMapper() {
 	}
 
 	/**
 	 * Diese statische Methode kann aufgrufen werden durch
-	 * <code>ComponentMapper.componentMapper()</code>. Sie stellt die
+	 * <code>ComponentPartMapper.componentPartMapper()</code>. Sie stellt die
 	 * Singleton-Eigenschaft sicher, indem Sie dafür sorgt, dass nur eine
-	 * einzige Instanz von <code>ComponentMapper</code> existiert.
+	 * einzige Instanz von <code>ComponentPartMapper</code> existiert.
 	 * <p>
 	 * 
-	 * <b>Fazit:</b> ComponentMapper sollte nicht mittels <code>new</code>
+	 * <b>Fazit:</b> ComponentPartMapper sollte nicht mittels <code>new</code>
 	 * instantiiert werden, sondern stets durch Aufruf dieser statischen
 	 * Methode.
 	 * 
-	 * @return DAS <code>ComponentMapper</code>-Objekt.
+	 * @return DAS <code>ComponentPartMapper</code>-Objekt.
 	 */
 
-	public static ComponentMapper componentMapper() {
-		if (componentMapper == null) {
-			componentMapper = new ComponentMapper();
+	public static ComponentPartMapper componentPartMapper() {
+		if (componentPartMapper == null) {
+			componentPartMapper = new ComponentPartMapper();
 		}
 
-		return componentMapper;
+		return componentPartMapper;
 	}
 
 	/**
-	 * Einfügen eines <code>Component</code>-Objekts in die Datenbank. Dabei
+	 * Einfügen eines <code>ComponentPart</code>-Objekts in die Datenbank. Dabei
 	 * wird auch der Primärschlüssel des übergebenen Objekts geprüft und ggf.
 	 * berichtigt.
 	 * 
-	 * @param c
-	 *            das zu speichernde Objekt
+	 * @param p 
+	 *              das zu speichernde Objekt
 	 * @return das bereits übergebene Objekt, jedoch mit ggf. korrigierter
 	 *         <code>id</code>.
 	 */
 
-	public Component insert(Component c) {
+	public ComponentPart insert(ComponentPart p) {
 
 		Connection con = DBConnection.connection();
 
@@ -85,110 +84,113 @@ public class ComponentMapper {
 			 */
 
 			ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid "
-					+ "FROM Component ");
+					+ "FROM ComponentPart ");
 
 			// Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein
 			if (rs.next()) {
 
 				/*
-				 * c erhält den bisher maximalen, nun um 1 inkrementierten
+				 * p erhält den bisher maximalen, nun um 1 inkrementierten
 				 * Primärschlüssel.
 				 */
-				c.setId(rs.getInt("maxid") + 1);
+				p.setId(rs.getInt("maxid") + 1);
 
 				stmt = con.createStatement();
 
 				// Jetzt erst erfolgt die tatsächliche Einfügeoperation
-				stmt.executeUpdate("INSERT INTO Component (id, name, description, material, dateOfModification) "
+				stmt.executeUpdate("INSERT INTO ComponentPart (id, name, description, material, dateOfModification, cID) "
 						+ "VALUES ("
-						+ c.getId()
+						+ p.getId()
 						+ ","
-						+ c.getName()
+						+ p.getName()
 						+ ","
-						+ c.getDescription()
+						+ p.getDescription()
 						+ ","
-						+ c.getMaterial()
+						+ p.getMaterial()
 						+ ","
-						+ c.getDateOfModification() + "," + ")");
+						+ p.getDateOfModification() 
+						+ ","
+						+ p.getcID() 
+						+ ")");
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
 
 		/*
-		 * Rückgabe, der evtl. korrigierten Baugruppe.
+		 * Rückgabe, des evtl. korrigierten Bauteils.
 		 * 
 		 * HINWEIS: Da in Java nur Referenzen auf Objekte und keine physischen
-		 * Objekte übergeben werden, wäre die Anpassung des Component-Objekts
+		 * Objekte übergeben werden, wäre die Anpassung des ComponentPart-Objekts
 		 * auch ohne diese explizite Rückgabe au�erhalb dieser Methode sichtbar.
-		 * Die explizite Rückgabe von c ist eher ein Stilmittel, um zu
+		 * Die explizite Rückgabe von p ist eher ein Stilmittel, um zu
 		 * signalisieren, dass sich das Objekt evtl. im Laufe der Methode
 		 * verändert hat.
 		 */
-		return c;
+		return p;
 
 	}
 
 	/**
 	 * Wiederholtes Schreiben eines Objekts in die Datenbank.
 	 * 
-	 * @param c
+	 * @param p
 	 *            das Objekt, das in die DB geschrieben werden soll
 	 * @return das als Parameter übergebene Objekt
 	 */
-	public Component update(Component c) {
+	public ComponentPart update(ComponentPart p) {
 
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("UPDATE Component " + "SET name=\""
-					+ c.getName() + "description=\"" + c.getDescription()
-					+ "\", " + "material=\"" + c.getMaterial() + "\", "
-					+ "dateOfModification=\"" + c.getDateOfModification()
-					+ "\" " + "WHERE id=" + c.getId());
+			stmt.executeUpdate("UPDATE ComponentPart " + "SET name=\""
+					+ p.getName() + "description=\"" + p.getDescription()
+					+ "\", " + "material=\"" + p.getMaterial() + "\", "
+					+ "dateOfModification=\"" + p.getDateOfModification() + "cID=\"" + p.getcID()
+					+ "\" " + "WHERE id=" + p.getId());
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
 
-		// Um Analogie zu insert(Component c) zu wahren, geben wir c zurück
-		return c;
+		// Um Analogie zu insert(ComponentPart p) zu wahren, geben wir p zurück
+		return p;
 
 	}
 
 	/**
-	 * Löschen der Daten eines <code>Component</code>-Objekts aus der Datenbank.
+	 * Löschen der Daten eines <code>ComponentPart</code>-Objekts aus der Datenbank.
 	 * 
-	 * @param c
+	 * @param p
 	 *            das aus der DB zu löschende "Objekt"
 	 */
-	public Component delete(Component c) {
+	public ComponentPart delete(ComponentPart p) {
 
 		Connection con = DBConnection.connection();
 
 		try {
 			Statement stmt = con.createStatement();
 
-			stmt.executeUpdate("DELETE FROM Component " + "WHERE id="
-					+ c.getId());
+			stmt.executeUpdate("DELETE FROM ComponentPart " + "WHERE id="
+					+ p.getId());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
 	/**
-	 * Suchen einer Baugruppe mit vorgegebener Id. Da diese eindeutig ist, wird
+	 * Suchen eines Bauteils mit vorgegebener Id. Da diese eindeutig ist, wird
 	 * genau ein Objekt zur�ckgegeben.
 	 * 
 	 * @param id
 	 *            Primärschlüsselattribut (->DB)
-	 * @return Baugruppen-Objekt, das dem übergebenen Schlüssel entspricht, null
+	 * @return Bauteil-Objekt, das dem übergebenen Schlüssel entspricht, null
 	 *         bei nicht vorhandenem DB-Tupel.
 	 */
 
-	public Component findById(int id) {
+	public ComponentPart findById(int id) {
 
 		Connection con = DBConnection.connection();
 
@@ -198,7 +200,7 @@ public class ComponentMapper {
 
 			// Statement ausfüllen und als Query an die DB schicken
 			ResultSet rs = stmt
-					.executeQuery("SELECT id, name, description, material, dateOfModification FROM Component "
+					.executeQuery("SELECT id, name, description, material, dateOfModification, cID FROM ComponentPart "
 							+ "WHERE id=" + id + " ORDER BY name");
 
 			/*
@@ -207,14 +209,15 @@ public class ComponentMapper {
 			 */
 			if (rs.next()) {
 				// Ergebnis-Tupel in Objekt umwandeln
-				Component c = new Component();
-				c.setId(rs.getInt("id"));
-				c.setName(rs.getString("name"));
-				c.setDescription(rs.getString("description"));
-				c.setMaterial(rs.getString("material"));
-				c.setDateOfModification(rs.getDate("dateOfModification"));
-
-				return c;
+				ComponentPart p = new ComponentPart();
+				p.setId(rs.getInt("id"));
+				p.setName(rs.getString("name"));
+				p.setDescription(rs.getString("description"));
+				p.setMaterial(rs.getString("material"));
+				p.setDateOfModification(rs.getDate("dateOfModification"));
+				p.setCID(rs.getInt("cID"));
+				
+				return p;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -225,39 +228,40 @@ public class ComponentMapper {
 	}
 
 	/**
-	 * Auslesen aller Baugruppen.
+	 * Auslesen aller Bauteile.
 	 * 
-	 * @return Ein Vektor mit Component-Objekten, die sämtliche Kunden
+	 * @return Ein Vektor mit ComponentPart-Objekten, die sämtliche Kunden
 	 *         repräsentieren. Bei evtl. Exceptions wird ein partiell gef�llter
 	 *         oder ggf. auch leerer Vetor zurückgeliefert.
 	 */
 
-	public Vector<Component> findByAll() {
+	public Vector<ComponentPart> findByAll() {
 
 		Connection con = DBConnection.connection();
 
 		// Ergebnisvektor vorbereiten
-		Vector<Component> result = new Vector<Component>();
+		Vector<ComponentPart> result = new Vector<ComponentPart>();
 
 		try {
 			Statement stmt = con.createStatement();
 
 			ResultSet rs = stmt
-					.executeQuery("SELECT id, name, description, material, dateOfModification "
-							+ "FROM Component " + "ORDER BY name");
+					.executeQuery("SELECT id, name, description, material, dateOfModification, cID "
+							+ "FROM ComponentPart " + "ORDER BY name");
 
-			// Für jeden Eintrag im Suchergebnis wird nun ein Component-Objekt
+			// Für jeden Eintrag im Suchergebnis wird nun ein ComponentPart-Objekt
 			// erstellt.
 			while (rs.next()) {
-				Component c = new Component();
-				c.setId(rs.getInt("id"));
-				c.setName(rs.getString("name"));
-				c.setDescription(rs.getString("description"));
-				c.setMaterial(rs.getString("material"));
-				c.setDateOfModification(rs.getDate("dateOfModification"));
+				ComponentPart p = new ComponentPart();
+				p.setId(rs.getInt("id"));
+				p.setName(rs.getString("name"));
+				p.setDescription(rs.getString("description"));
+				p.setMaterial(rs.getString("material"));
+				p.setDateOfModification(rs.getDate("dateOfModification"));
+				p.setCID(rs.getInt("cID"));
 
 				// Hinzufügen des neuen Objekts zum Ergebnisvektor
-				result.addElement(c);
+				result.addElement(p);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -267,26 +271,21 @@ public class ComponentMapper {
 		return result;
 	}
 
-	// (find by Bom), hier muss man in der Klammer den Fremdschl��ssel
-	// einf��gen, nicht (int id)
-	public Vector<Component> findByComponentPart(int id) {
-
+	public ComponentPart findByName(String name){
+		
 	}
 
-	public Vector<Component> findByComponentPart(ComponentPart p) {
-
+	public ComponentPart findByMaterial(String material){
+		
 	}
-
-	public Vector<Component> findByFinishedProduct(int id) {
-
+	
+	public BillOfMaterial getBom(ComponentPart p){
+		
 	}
-
-	public Vector<Component> findByFinishedProduct(FinishedProduct f) {
-
+	
+	public Component getComponentOf(ComponentPart p){
+		
 	}
-
-	public BillOfMaterial getBomOf(Component c) {
-
-	}
-
+	
 }
+
