@@ -1,8 +1,5 @@
 package de.hdm.gruppe3.itprojekt.client;
 
-import de.hdm.thies.bankProjekt.client.ClientsideSettings;
-import de.hdm.thies.bankProjekt.client.DeleteCustomerDemo.DeleteCustomerCallback;
-import de.hdm.thies.bankProjekt.shared.BankAdministrationAsync;
 
 /** 
  * In diesem Showcase wird das Löschen eines Components mit der Nummer 3 dargestellt.
