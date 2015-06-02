@@ -10,25 +10,58 @@ h1 {
   text-align: center;
 }
 
-.sendButton {
-  display: block;
-  font-size: 16pt;
+
+.headline {
+	font-size: 12pt;
+	font-weight: bold;
+	color: #777777;
+	margin: 0px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	text-align: left;
 }
 
-/** Most GWT widgets already have a style name defined */
-.gwt-DialogBox {
-  width: 400px;
+.simpletext {
+	font-size: 100%;
+	font-weight: normal;
+	padding: 3px;
 }
 
-.dialogVPanel {
-  margin: 5px;
+
+.menubutton {
+	font-size: 100%;
+	font-weight: bold;
+	width: 15em;
+	margin-bottom: 1em;
 }
 
-.serverResponseLabelError {
-  color: red;
+div#TopLevelFrame {
+	width: 800px;
+	min-width: 300px;
+	border: 1px solid silver;
+	margin: 0 auto;      /* standardkonforme horizontale Zentrierung */
+ }
+
+div#Detail {
+	margin-left: 20em;
+	min-height: 400px;
+	max-height: 500px;
+	padding: 1em 1em;
+	border-top: 1px dashed silver;
+	border-left: 1px dashed silver;
+	overflow:scroll;
 }
 
-/** Set ids using widget.getElement().setId("idOfElement") */
-#closeButton {
-  margin: 15px 6px 6px;
+div#Navigator {
+	float: left;
+	width: 18em;
+	min-height: 300px;
+	padding: 1em 1em;
+	border-top: 1px dashed silver;
 }
+
+div#Header {
+	margin: 0 auto;      /* standardkonforme horizontale Zentrierung */
+	/* border: 1px dashed silver; */
+}
+
