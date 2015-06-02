@@ -67,27 +67,3 @@ public class Stuecklistenmangement implements EntryPoint {
 		 
 	 }
 }
-		    
-	 
-	 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
