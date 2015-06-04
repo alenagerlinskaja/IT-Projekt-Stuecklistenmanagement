@@ -43,7 +43,7 @@ public class finishedProductDemo extends Showcase {
 	  	      // Create table for stock data.
 	  	      finishedProductstocksFlexTable.setText(0, 0, "Name");
 	  	      finishedProductstocksFlexTable.setText(0, 1, "Nummer");
-	  	      finishedProductstocksFlexTable.setText(0, 2, "mID");
+	  	      finishedProductstocksFlexTable.setText(0, 2, "fpID");
 	  	      finishedProductstocksFlexTable.setText(0, 3, "löschen");
 	  	      finishedProductstocksFlexTable.setText(0,4,"bearbeiten");
 
