@@ -1,7 +1,23 @@
 package de.hdm.gruppe3.itprojekt.client;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class ComponentDemo extends Showcase{
+	
+  private VerticalPanel mainPanel = new VerticalPanel();
+  private FlexTable componentstocksFlexTable = new FlexTable();
+  private HorizontalPanel addPanel = new HorizontalPanel();
+  private TextBox newSymbolTextBox = new TextBox();
+  private Button addStockButton = new Button("Add");
+  private Label lastUpdatedLabel = new Label();
 	
 	/**
 	   * Jeder Showcase besitzt eine einleitende Überschrift, die durch diese
@@ -23,7 +39,48 @@ public class ComponentDemo extends Showcase{
 	  protected void run() {
 	    this.append("Darstellen von Component");
 	  }
-	  
-	  
+	    public void onModuleLoad() {
+	      // Create table for stock data.
+	      componentstocksFlexTable.setText(0, 0, "Name");
+	      componentstocksFlexTable.setText(0, 1, "Nummer");
+	      componentstocksFlexTable.setText(0, 2, "cID");
+	      componentstocksFlexTable.setText(0, 3, "löschen");
+	      componentstocksFlexTable.setText(0,4,"bearbeiten");
 
-}
+	      // Assemble Add Stock panel.
+	      addPanel.add(newSymbolTextBox);
+	      addPanel.add(addStockButton);
+
+	      // Assemble Main panel.
+	      mainPanel.add(componentstocksFlexTable);
+	      mainPanel.add(addPanel);
+	      mainPanel.add(lastUpdatedLabel);
+
+	      // Associate the Main panel with the HTML host page.
+	      RootPanel.get("StueckList").add(mainPanel);
+
+	      // Move cursor focus to the input box.
+	      newSymbolTextBox.setFocus(true);
+	      
+	      addStockButton.addClickHandler(new ClickHandler() {
+		      @Override
+			public void onClick(ClickEvent event) {
+		        /*
+		         * Showcase instantiieren.
+		         */
+		        Showcase showcase = new CreateComponent();
+
+		        /*
+		         * Für die Ausgaben haben wir ein separates DIV-Element namens "Details"
+		         * in die zugehörige HTML-Datei eingefügt. Bevor wir den neuen Showcase
+		         * dort einbetten, löschen wir vorsichtshalber sämtliche bisherigen
+		         * Elemente dieses DIV.
+		         */
+		        RootPanel.get("Details").clear();
+		        RootPanel.get("Details").add(showcase);
+		      }
+		    });
+	    }
+
+	  }
+

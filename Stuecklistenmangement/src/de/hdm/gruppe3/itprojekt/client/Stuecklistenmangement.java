@@ -19,8 +19,8 @@ public class Stuecklistenmangement implements EntryPoint {
 		 RootPanel.get("Navigator").add(naviPanel);
 		 
 		 final Button component = new Button ("Component");
-		 final Button componentPart = new Button("ComponentPart");
-		 final Button finishedProduct = new Button("FinishedProduct");
+		 final Button componentPart = new Button("Componentpart");
+		 final Button finishedProduct = new Button("Finishedproduct");
 		 final Button user = new Button("User");
 		 
 		 /*
@@ -64,6 +64,62 @@ public class Stuecklistenmangement implements EntryPoint {
 		      }
 		    });
 		    
-		 
+		    componentPart.addClickHandler(new ClickHandler() {
+			      @Override
+				public void onClick(ClickEvent event) {
+			        /*
+			         * Showcase instantiieren.
+			         */
+			        Showcase showcase = new ComponentPartDemo();
+
+			        /*
+			         * Für die Ausgaben haben wir ein separates DIV-Element namens "Details"
+			         * in die zugehörige HTML-Datei eingefügt. Bevor wir den neuen Showcase
+			         * dort einbetten, löschen wir vorsichtshalber sämtliche bisherigen
+			         * Elemente dieses DIV.
+			         */
+			        RootPanel.get("Details").clear();
+			        RootPanel.get("Details").add(showcase);
+			      }
+			    });
+		    
+			
+		    finishedProduct.addClickHandler(new ClickHandler() {
+			      @Override
+				public void onClick(ClickEvent event) {
+			        /*
+			         * Showcase instantiieren.
+			         */
+			        Showcase showcase = new finishedProductDemo();
+
+			        /*
+			         * Für die Ausgaben haben wir ein separates DIV-Element namens "Details"
+			         * in die zugehörige HTML-Datei eingefügt. Bevor wir den neuen Showcase
+			         * dort einbetten, löschen wir vorsichtshalber sämtliche bisherigen
+			         * Elemente dieses DIV.
+			         */
+			        RootPanel.get("Details").clear();
+			        RootPanel.get("Details").add(showcase);
+			      }
+			    });
+			  
+		    user.addClickHandler(new ClickHandler() {
+			      @Override
+				public void onClick(ClickEvent event) {
+			        /*
+			         * Showcase instantiieren.
+			         */
+			        Showcase showcase = new userDemo();
+
+			        /*
+			         * Für die Ausgaben haben wir ein separates DIV-Element namens "Details"
+			         * in die zugehörige HTML-Datei eingefügt. Bevor wir den neuen Showcase
+			         * dort einbetten, löschen wir vorsichtshalber sämtliche bisherigen
+			         * Elemente dieses DIV.
+			         */
+			        RootPanel.get("Details").clear();
+			        RootPanel.get("Details").add(showcase);
+			      }
+			    });	 
 	 }
 }
