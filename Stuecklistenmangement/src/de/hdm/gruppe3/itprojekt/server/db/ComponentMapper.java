@@ -164,7 +164,7 @@ public class ComponentMapper {
 	 * @param c
 	 *            das aus der DB zu löschende "Objekt"
 	 */
-	public Component delete(Component c) {
+	public void delete(Component c) {
 
 		Connection con = DBConnection.connection();
 
